@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour {
 
-	public float speed = 5.0f;
+	public float speed = 1f;
 	public CharacterController controller;
 
 	private ArrayList commands = new ArrayList();
 
+	private bool execute = false;
+	private int count = 0;
+
 	void Start(){
 		controller = GetComponent<CharacterController>();
+		Debug.Log("Start");
 	}
 
 	// Update is called once per frame
 	void Update () {
-		float horizontal = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-		float vertical = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-
-		Vector3 mov = new Vector3(horizontal,0,vertical);
-
-		controller.Move(mov);
-
-		GetKey();
+Debug.Log("oi");
+		if (execute){
+			Exec();
+		}else{
+			GetKey();
+		}	
 	}
 
 	void GetKey(){
@@ -44,14 +46,48 @@ public class Robot : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.E)){
 			Debug.Log("EXECUTE");
-			Execute();
+			execute = true;
 		}
 	}
 
-	void Execute(){
-		foreach (string item in commands)
+	void Exec(){
+		if (commands.Count > count)
 		{
-			Debug.Log(item);
+			float horizontal = GetComponent<Transform>().position.x;
+			float vertical = GetComponent<Transform>().position.y;
+			Vector3 mov = new Vector3(0,0,0);
+
+			Debug.Log(commands[count]);
+			string test = commands[count].ToString();
+			switch(test){
+				case "UP":
+					vertical = vertical + speed;
+					mov = new Vector3(0,0,vertical);
+					break;
+				case "DOWN":
+					vertical = vertical - speed;
+					mov = new Vector3(0,0,vertical);
+					break;
+				case "RIGHT":
+					horizontal = horizontal + speed;
+					mov = new Vector3(horizontal,0,0);
+					break;
+				case "LEFT":
+					horizontal = horizontal - speed;
+					mov = new Vector3(horizontal,0,0);
+					break;
+				default:
+					break;
+			}
+			//mov = new Vector3(horizontal,0,vertical);
+
+			controller.Move(mov);
+			count++;
+		}
+		else{
+			count = 0;
+			commands = new ArrayList();
+			execute = false;
 		}
 	}
 }
