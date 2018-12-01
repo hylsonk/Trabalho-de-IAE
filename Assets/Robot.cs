@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour {
 
-	public float speed = 1f;
+	private float speed = 2.0f;
 	public CharacterController controller;
 
 	private ArrayList commands = new ArrayList();
@@ -12,14 +12,23 @@ public class Robot : MonoBehaviour {
 	private bool execute = false;
 	private int count = 0;
 
+	Vector3 mov = new Vector3(0,0,0);
+
+	float horizontal;
+	float vertical;
+
+	float Ybase;
+
 	void Start(){
 		controller = GetComponent<CharacterController>();
+		horizontal = GetComponent<Transform>().position.x;
+		vertical = GetComponent<Transform>().position.z;
+		Ybase = GetComponent<Transform>().position.y;
 		Debug.Log("Start");
 	}
 
 	// Update is called once per frame
 	void Update () {
-Debug.Log("oi");
 		if (execute){
 			Exec();
 		}else{
@@ -52,36 +61,34 @@ Debug.Log("oi");
 
 	void Exec(){
 		if (commands.Count > count)
-		{
-			float horizontal = GetComponent<Transform>().position.x;
-			float vertical = GetComponent<Transform>().position.y;
-			Vector3 mov = new Vector3(0,0,0);
+		{	
 
 			Debug.Log(commands[count]);
 			string test = commands[count].ToString();
 			switch(test){
 				case "UP":
 					vertical = vertical + speed;
-					mov = new Vector3(0,0,vertical);
+					//mov = new Vector3(0,0,vertical);
 					break;
 				case "DOWN":
 					vertical = vertical - speed;
-					mov = new Vector3(0,0,vertical);
+					//mov = new Vector3(0,0,vertical);
 					break;
 				case "RIGHT":
 					horizontal = horizontal + speed;
-					mov = new Vector3(horizontal,0,0);
+					//mov = new Vector3(horizontal,0,0);
 					break;
 				case "LEFT":
 					horizontal = horizontal - speed;
-					mov = new Vector3(horizontal,0,0);
+					//mov = new Vector3(horizontal,0,0);
 					break;
 				default:
 					break;
 			}
-			//mov = new Vector3(horizontal,0,vertical);
-
-			controller.Move(mov);
+			//float step = speed;
+			GetComponent<Transform>().position = Vector3.MoveTowards(GetComponent<Transform>().position, new Vector3(horizontal,Ybase,vertical),step);
+			
+			//controller.Move(mov);
 			count++;
 		}
 		else{
