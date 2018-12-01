@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc768be050407f8429039cc1824627fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 402395940}
+  controller: {fileID: 0}
 --- !u!136 &402395942
 CapsuleCollider:
   m_ObjectHideFlags: 0

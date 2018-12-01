@@ -86,7 +86,7 @@ public class Robot : MonoBehaviour {
 					break;
 			}
 			//float step = speed;
-			GetComponent<Transform>().position = Vector3.MoveTowards(GetComponent<Transform>().position, new Vector3(horizontal,Ybase,vertical),step);
+			GetComponent<Transform>().position = new Vector3(horizontal,Ybase,vertical);
 			
 			//controller.Move(mov);
 			count++;
