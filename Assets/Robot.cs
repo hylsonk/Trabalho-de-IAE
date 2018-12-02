@@ -31,6 +31,7 @@ public class Robot : MonoBehaviour {
 	void Update () {
 		if (execute){
 			Exec();
+			
 		}else{
 			GetKey();
 		}	
@@ -62,7 +63,7 @@ public class Robot : MonoBehaviour {
 	void Exec(){
 		if (commands.Count > count)
 		{	
-
+			
 			Debug.Log(commands[count]);
 			string test = commands[count].ToString();
 			switch(test){
